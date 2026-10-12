@@ -164,7 +164,7 @@ Decided in later discussion:
   - **Phaser** draws the world: tile maps, sprites, walk animations, camera, collisions, interaction zones.
   - **React** draws everything text-heavy on top: character select, dialogue and choice panels, group chat, stats bar, route overlay, Batch Biography, dev panel.
 - **Tap-to-move** as the primary control; keyboard as a desktop extra. No virtual joystick.
-- **Top-down perspective.** **[CONFIRM]**
+- **Top-down perspective** (orthogonal), confirmed by the owner.
 
 ### Architecture rules
 
@@ -433,7 +433,7 @@ Multiple batches, crews, specialisation, cooperatives, collective missions, repu
 | Setting names | Town, region, river, fictional currency not chosen. |
 | NPC display names | Earlier Ghanaian names must be replaced; use role IDs until decided. |
 | Third starting character | Role ID `heir`; gender and framing not settled. |
-| Top-down perspective | Recommended and written in; owner to confirm. |
+| Top-down perspective | **Decided:** orthogonal top-down, confirmed by the owner. |
 | Moving between zones | Zone edges vs a small travel map. Start with zone edges. |
 | Map authoring | Tiled vs code/JSON maps. Code/JSON recommended for agents. |
 | Art style | Placeholder CC0 for the prototype; final style (pixel vs illustrated) undecided. |
