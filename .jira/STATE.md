@@ -37,7 +37,6 @@ Status legend: `researching`, `planned`, `executing`, `verifying`, `done`, `bloc
 
 <!-- Active blockers across all sprints. Resolved blockers move to the Decisions log. -->
 
-- (2026-10-12-phase-0-scaffold) Confirm CI passes on PR #3 and record the run URL in EXECUTION.md.
 - (2026-10-12-phase-0-scaffold) Owner: connect Cloudflare Pages (README settings, VITE_GOLD_RUN_DEV=true on Preview only), open the PR #3 preview on a phone, record the result in EXECUTION.md.
 - (2026-10-12-phase-0-scaffold) docs/GAME_SPEC.md section 5 still marks top-down perspective as [CONFIRM] although D-05 confirmed it; owner to update the spec.
 
