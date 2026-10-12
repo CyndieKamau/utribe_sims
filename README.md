@@ -40,10 +40,14 @@ Project settings:
 | Setting | Value |
 | --- | --- |
 | Framework preset | `None` |
-| Build command | `npm run build` |
+| Build command | `[ "$CF_PAGES_BRANCH" = "main" ] \|\| export VITE_GOLD_RUN_DEV=true; npm run build` |
 | Build output directory | `dist` |
 | Production branch | `main` |
-| Environment variable | `VITE_GOLD_RUN_DEV=true` on the **Preview** environment only, never Production |
+| Preview branch | All non-Production branches |
+
+Pages sets `CF_PAGES_BRANCH` during every build, so the build command turns the test hook on for
+every branch except `main`. No environment variable is needed in the dashboard; don't add
+`VITE_GOLD_RUN_DEV` there, because dashboard variables can apply to Production too.
 
 Cloudflare reads the Node version from `.nvmrc`. If the Pages build fails because its build image
 can't provide Node 24, change `.nvmrc` to `22`; `engines` in `package.json` already allows
