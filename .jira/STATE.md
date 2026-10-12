@@ -32,12 +32,12 @@ Status legend: `researching`, `planned`, `executing`, `verifying`, `done`, `bloc
 - 2026-10-13 (2026-10-12-phase-0-scaffold) D-07: Toolchain upgraded in Phase 0 (Vite 8, TypeScript ~6.0, plugin-react 6, react-hooks 7).
 - 2026-10-13 (2026-10-12-phase-0-scaffold) D-08: ESLint 10 flat config with folder-scoped engine/systems import bans and a Math.random ban.
 - 2026-10-13 (2026-10-12-phase-0-scaffold) D-09: Template demo code, branded assets and telemetry are deleted.
+- 2026-10-13 (2026-10-12-phase-0-scaffold) D-06 mechanism: Cloudflare Pages build command enables VITE_GOLD_RUN_DEV for every branch except main via CF_PAGES_BRANCH; no dashboard variable (the dashboard has no Preview-only option).
 
 ## Blockers
 
 <!-- Active blockers across all sprints. Resolved blockers move to the Decisions log. -->
 
-- (2026-10-12-phase-0-scaffold) Owner: connect Cloudflare Pages (README settings, VITE_GOLD_RUN_DEV=true on Preview only), open the PR #3 preview on a phone, record the result in EXECUTION.md.
 - (2026-10-12-phase-0-scaffold) docs/GAME_SPEC.md section 5 still marks top-down perspective as [CONFIRM] although D-05 confirmed it; owner to update the spec.
 
 ## Notes
