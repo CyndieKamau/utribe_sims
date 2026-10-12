@@ -20,7 +20,7 @@ files_modified:
 covers:
   - D-08
   - CD-10
-  - GOAL: npm run lint exits 0
+  - "GOAL: npm run lint exits 0 (this plan's files; the repo-wide run is Plan V's full gate)"
   - "RESEARCH: ESLint no-restricted-imports scoped to src/engine/** and src/systems/** banning phaser, react, react-dom, zustand root, game/ui dirs"
   - "RESEARCH: no-restricted-properties for Math.random (catches destructuring)"
   - "RESEARCH: legacy .eslintrc.cjs is dead; write a fresh flat eslint.config.js"
@@ -40,7 +40,7 @@ effects:
   - folder-scoped import bans for `src/engine/**` and `src/systems/**`
   - a repo-wide `Math.random` ban
 - a unit test that proves those rules fire (CD-10)
-- a clean `npm run lint` on the wave-I tree
+- a clean lint on the files this plan owns (the repo-wide `npm run lint` runs in Plan V)
 
 ## Files
 
@@ -92,30 +92,29 @@ The sprint runs on one branch with `worktree: false`. Each executor stages only 
     - **Scoping guard:** `import 'phaser'` linted as `src/game/probe.ts` gives 0 `no-restricted-imports` hits.
 - **Done when:**
   - `npx vitest run tests/unit/boundaries.test.ts` exits 0, with ≥ 20 passing assertions across the `it.each` cases. It runs without `vitest.config.ts`; Vitest's default include matches. After Plan III lands, `npm test` includes it.
-  - Temporarily deleting the `src/engine/**` block from `eslint.config.js` makes the test fail; restore it afterwards (red check).
+  - The test includes a permanent in-test control: a second ESLint instance, `new ESLint({ cwd, overrideConfigFile: true, overrideConfig: controlConfig })`, where `controlConfig` is the array imported from `eslint.config.js` with the `src/engine/**` and `src/systems/**` blocks filtered out in memory (`overrideConfig` alone merges on top of the file and cannot remove a block), gives 0 `no-restricted-imports` hits for the BND-01 cases. This proves the hits come from those blocks. Never edit `eslint.config.js` on disk to run a red check: Plan III lints `src/engine` concurrently on the same tree and would get a false pass.
 - **Covers:** BND-01, BND-02, BND-03, CD-10
 
-### III. Make `npm run lint` exit 0 on the wave-I tree
+### III. Make lint exit 0 on the files this plan owns
 
 - **Files:** only if lint reports errors: `src/main.tsx`, `src/ui/App.tsx`, `src/ui/PhaserGame.tsx`, `src/game/main.ts`, `src/game/EventBus.ts`, `src/game/scenes/Boot.ts`
-- **Read first:** the output of `npm run lint`, each file it flags, `~/.claude/skills/react-best-practices/SKILL.md`, `~/.claude/skills/debug/SKILL.md`.
-- **Action:** Run `npm run lint`. Fix each error at its root, minimally:
+- **Read first:** the output of `npx eslint eslint.config.js src/main.tsx src/ui src/game tests/unit/boundaries.test.ts`, each file it flags, `~/.claude/skills/react-best-practices/SKILL.md`, `~/.claude/skills/debug/SKILL.md`.
+- **Action:** Run `npx eslint eslint.config.js src/main.tsx src/ui src/game tests/unit/boundaries.test.ts`. Do not run or gate on repo-wide `npm run lint` here: Plan III writes `src/engine/**` in parallel and this plan may not touch those files. Fix each error at its root, minimally:
   - Do not disable rules globally.
   - Do not add `eslint-disable` comments, except a single-line disable with a written reason where a React Compiler rule (`react-hooks/refs`, `react-hooks/immutability`) conflicts with the template's mount-once Phaser bridge. Record each such disable in EXECUTION.md.
   - Do not change behaviour: the mount-once guard, `destroy(true)` cleanup and scene-ready handshake must survive.
-  - Engine files from Plan III may not exist yet. Lint whatever is present.
 - **Done when:**
-  - `npm run lint` exits 0.
-  - `npm run typecheck` still exits 0.
+  - `npx eslint eslint.config.js src/main.tsx src/ui src/game tests/unit/boundaries.test.ts` exits 0.
+  - `npx tsc --noEmit -p tsconfig.json` still exits 0.
   - `npm run build` still exits 0.
-- **Covers:** D-08, GOAL: npm run lint exits 0
+- **Covers:** D-08, GOAL: npm run lint exits 0 (this plan's files)
 
 ## Nyquist criteria for this plan
 
 - [ ] Engine/systems imports of phaser, react, react-dom, zustand root, game/ui/dev are lint errors (BND-01)
 - [ ] `zustand/vanilla` and `zustand/middleware` are allowed in engine (BND-02)
 - [ ] `Math.random` (call and destructure) is a lint error in src/engine, src/game, src/ui and tests (BND-03)
-- [ ] `npm run lint` exits 0 on the tree
+- [ ] `npx eslint eslint.config.js src/main.tsx src/ui src/game tests/unit/boundaries.test.ts` exits 0 (repo-wide lint is Plan V)
 
 ## Out of scope
 
@@ -128,5 +127,5 @@ The sprint runs on one branch with `worktree: false`. Each executor stages only 
 ## Risks accepted in this plan
 
 - `no-restricted-imports` checks static imports only, not dynamic `import()`, and it can't see a global `Phaser` namespace. Accepted per CD-10; reviewers and Vitest's `node` environment catch the rest.
-- Plan III writes engine code in parallel. If that code trips a lint rule, Plan III fixes it in its own files. The final full-tree lint is re-run in Plan V.
+- Plan III writes engine code in parallel. This plan's lint check is scoped to its own files, so an engine lint error cannot block it. Plan III lints its own files; the repo-wide `npm run lint` runs in Plan V's full gate.
 - Single-line React Compiler rule disables in the template bridge may be needed. Each one is justified in EXECUTION.md.

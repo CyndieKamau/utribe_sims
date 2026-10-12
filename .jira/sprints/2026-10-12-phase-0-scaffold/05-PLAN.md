@@ -99,6 +99,7 @@ effects:
      - `## Testing`: unit tests live in `tests/unit` (Vitest). E2E lives in `tests/e2e` (Playwright, Pixel 7 + desktop Chromium) and drives the game through `window.__GOLD_RUN__`, which exists only on the dev server and in preview builds.
      - `## Deploy previews`: Cloudflare Pages via its GitHub integration. Production deploys from `main`; every pull request gets a public `*.pages.dev` preview URL.
        - Settings: framework preset `None`, build command `npm run build`, build output directory `dist`, production branch `main`, environment variable `VITE_GOLD_RUN_DEV=true` on the **Preview** environment only (never Production). Node comes from `.nvmrc`.
+       - Note: if the Pages build fails because its build image can't provide Node 24, change `.nvmrc` to `22`. `engines` already allows `>=22.12`.
        - State plainly: "Creating the Cloudflare Pages project and connecting this repository is a one-time manual step for the repository owner. Automation cannot do it."
        - Mention that previews include the test hook on purpose, and that the production build is checked in CI to exclude it.
      - `## Credits`: scaffolded from [phaserjs/template-react-ts](https://github.com/phaserjs/template-react-ts) at commit `<SHA from EXECUTION.md>`, used under the MIT License, followed by the template's copyright line and the MIT permission notice in a fenced block. Art credits live in `public/assets/CREDITS.md`.
@@ -193,5 +194,6 @@ effects:
 
 - DEL-03 can't be closed by an agent. The sprint can finish "green pending owner verification", and the verifier treats DEL-03 as owner-attested.
 - If the owner hasn't connected Cloudflare before the PR opens, no preview comment appears. The owner connects it, then re-runs the Pages build from the Cloudflare dashboard or pushes an empty commit.
+- Cloudflare Pages honours `.nvmrc` only for Node versions its build image supports, and Node 24 support is unverified. If it isn't supported, the preview build fails and DEL-03 is blocked. Fallback: set `.nvmrc` to `22` (allowed by `engines` `>=22.12`). The README documents this.
 - Action major versions are MEDIUM confidence. Task I checks them live.
 - Cloudflare Pages is in maintenance mode, though not end-of-life. Accepted per the spec; swapping hosts later touches only the deploy settings and the README section.
