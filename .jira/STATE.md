@@ -15,7 +15,7 @@ Project-wide state for the `jira` workflow. The orchestrator commands keep this 
 
 | Slug | Status | Goal | Outcome |
 |------|--------|------|---------|
-| 2026-10-12-phase-0-scaffold | planned | Scaffold a Vite + React + TS + Phaser repo with tests, lint, CI and phone-openable preview | — |
+| 2026-10-12-phase-0-scaffold | done | Scaffold a Vite + React + TS + Phaser repo with tests, lint, CI and phone-openable preview | https://github.com/CyndieKamau/utribe_sims/pull/3 |
 
 Status legend: `researching`, `planned`, `executing`, `verifying`, `done`, `blocked`, `abandoned`.
 
@@ -36,6 +36,10 @@ Status legend: `researching`, `planned`, `executing`, `verifying`, `done`, `bloc
 ## Blockers
 
 <!-- Active blockers across all sprints. Resolved blockers move to the Decisions log. -->
+
+- (2026-10-12-phase-0-scaffold) Confirm CI passes on PR #3 and record the run URL in EXECUTION.md.
+- (2026-10-12-phase-0-scaffold) Owner: connect Cloudflare Pages (README settings, VITE_GOLD_RUN_DEV=true on Preview only), open the PR #3 preview on a phone, record the result in EXECUTION.md.
+- (2026-10-12-phase-0-scaffold) docs/GAME_SPEC.md section 5 still marks top-down perspective as [CONFIRM] although D-05 confirmed it; owner to update the spec.
 
 ## Notes
 
