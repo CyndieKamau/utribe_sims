@@ -2,7 +2,7 @@
 project: utribe_sims
 created: 2026-10-12
 last_activity: 2026-10-12
-active_sprint: 
+active_sprint: 2026-10-12-phase-0-scaffold
 ---
 
 # State
@@ -15,6 +15,7 @@ Project-wide state for the `jira` workflow. The orchestrator commands keep this 
 
 | Slug | Status | Goal | Outcome |
 |------|--------|------|---------|
+| 2026-10-12-phase-0-scaffold | researching | Scaffold a Vite + React + TS + Phaser repo with tests, lint, CI and phone-openable preview | — |
 
 Status legend: `researching`, `planned`, `executing`, `verifying`, `done`, `blocked`, `abandoned`.
 

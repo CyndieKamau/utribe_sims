@@ -154,7 +154,13 @@ From the owner's original constraints:
 
 Decided in later discussion:
 - **Vite + React + TypeScript.** (Not Next.js: no server rendering or routing needed.)
-- **Phaser 3** for the walkable world, in a **hybrid** setup based on Phaser's official Vite + React template:
+- **Phaser 4** for the walkable world, in a **hybrid** setup based on Phaser's official Vite + React
+  template (`phaserjs/template-react-ts`, which ships Phaser 4 on `main`). Phaser 3.90.0 was the last
+  3.x release and the engine's own guidance is not to start new projects on it. The template's move to
+  v4 changed only `package.json`, so the bridge code this architecture relies on — `PhaserGame.tsx`,
+  `EventBus.ts`, the scene handshake — is unchanged. Note for agents: Phaser 4 rewrote the renderer,
+  `roundPixels` now defaults to `false`, and the Canvas renderer is deprecated. Phaser 4 ships its own
+  skills; prefer them over recalled Phaser 3 APIs.
   - **Phaser** draws the world: tile maps, sprites, walk animations, camera, collisions, interaction zones.
   - **React** draws everything text-heavy on top: character select, dialogue and choice panels, group chat, stats bar, route overlay, Batch Biography, dev panel.
 - **Tap-to-move** as the primary control; keyboard as a desktop extra. No virtual joystick.
@@ -192,7 +198,14 @@ Decided in later discussion:
 ### [OPEN] technical decisions
 
 - **Map authoring:** Tiled editor (standard, but a GUI agents can't use) vs maps defined in code/JSON arrays (agent-friendly). Recommended: code/JSON for the prototype.
-- **Deploy target:** Vercel, Netlify or GitHub Pages, with auto-deploy on merge.
+- ~~**Deploy target**~~ — decided: **Cloudflare Pages**, via its GitHub integration. Production
+  deploys from `main`; every pull request gets an automatic public preview at
+  `<hash>.<project>.pages.dev`. No custom domain needed and no login wall, which the "opens on a
+  phone" gate depends on. Chosen over Vercel (Deployment Protection can put previews behind a login,
+  and Hobby is non-commercial only) and Netlify (production deploys consume credits; all sites pause
+  when they run out). Pages is in maintenance mode — Cloudflare directs new projects to Workers
+  Static Assets — but it is not end-of-life, and swapping static hosts later means changing one
+  workflow file.
 - **Styling for React overlays** (Tailwind, CSS modules, etc.).
 - **Audio:** not discussed.
 
@@ -424,7 +437,8 @@ Multiple batches, crews, specialisation, cooperatives, collective missions, repu
 | Moving between zones | Zone edges vs a small travel map. Start with zone edges. |
 | Map authoring | Tiled vs code/JSON maps. Code/JSON recommended for agents. |
 | Art style | Placeholder CC0 for the prototype; final style (pixel vs illustrated) undecided. |
-| Deploy target | Not chosen. |
+| Deploy target | **Decided:** Cloudflare Pages, PR previews on `*.pages.dev`. |
+| Phaser major version | **Decided:** Phaser 4. Supersedes the Phaser 3 lock in section 5. |
 | Styling for overlays, audio | Not discussed. |
 | Share/replay codes | Suggested (seed + choices as a link); not adopted. |
 | Who writes dialogue | Proposed: agents draft, owner rewrites key beats (temptation, rejection, claim). Not confirmed. |
