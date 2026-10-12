@@ -12,4 +12,15 @@ function renderApp ()
     );
 }
 
-renderApp();
+// The test hook must be installed before React renders so the scene-ready event can't be missed.
+const testHookEnabled = import.meta.env.DEV || import.meta.env.VITE_GOLD_RUN_DEV === 'true';
+
+const ready = testHookEnabled
+    ? import('./dev/testHook').then(({ installTestHook }) => installTestHook())
+    : Promise.resolve();
+
+ready.then(renderApp, (error: unknown) =>
+{
+    console.error(error);
+    renderApp();
+});
