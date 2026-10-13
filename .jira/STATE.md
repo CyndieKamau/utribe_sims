@@ -42,3 +42,7 @@ Status legend: `researching`, `planned`, `executing`, `verifying`, `done`, `bloc
 ## Notes
 
 <!-- Free-form workflow notes, accumulated lessons, links to recurring patterns. -->
+
+- 2026-10-13 (2026-10-12-phase-0-scaffold) Dashboard steps for third-party hosting drift faster than research; describe each setting's goal plus a fallback, and prefer build-command or repo config over dashboard-only settings.
+- 2026-10-13 (2026-10-12-phase-0-scaffold) Connecting hosting while the sprint PR is open: production fails until merge, and the PR needs a fresh push to get a preview.
+- 2026-10-13 (2026-10-12-phase-0-scaffold) Executor prompts must spell out the commit trailer rule (no `Refs:` with sprint or plan IDs, no attribution).
